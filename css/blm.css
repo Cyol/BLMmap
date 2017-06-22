@@ -1,0 +1,61 @@
+/*********************************************************************
+ *                 Carte Bloodlust CSS                                *
+ * Author     : Cyol http://cyol.fr/blog                             *
+ * Licence    : CC BY http://creativecommons.org/licenses/by/3.0/fr/ *
+ *********************************************************************/
+html, body, #map {
+    width:100vw; height:100vh; margin:0; padding:0; z-index: 1;
+    cursor: default;
+}
+
+h1{
+    top:5px;
+    right:5px;
+    z-index:2;
+    position:absolute;
+    width: 30%;
+}
+h1> img{
+    width: 100%;
+    max-width:300px;
+}
+
+.leaflet-marker-icon {
+    color: #fff;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 8px;
+}
+.search-tip b {
+    color: #fff;
+}
+.ville.search-tip b,
+.ville.leaflet-marker-icon {
+    background: #f66
+}
+.region.search-tip b,
+.region.leaflet-marker-icon {
+    background: #66f
+}
+.search-tip {
+    white-space: nowrap;
+}
+.search-tip b {
+    display: inline-block;
+    clear: left;
+    float: right;
+    padding: 0 4px;
+    margin-left: 4px;
+}
+
+.leaflet-popup-content>h2{
+    text-align: center;
+}
+.leaflet-popup-content>ul{
+    padding-left: 10px;
+}
+.leaflet-popup-content .reserve{
+    color: red;
+}
