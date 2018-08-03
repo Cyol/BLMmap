@@ -1,11 +1,19 @@
 <lieuxTanaephis>
     <lieu>
         <nom>Pôle</nom>
+        <nomsAlternatifs>
+            <nom>Popol</nom>
+        </nomsAlternatifs>
         <affiliation>Dérigion</affiliation>
         <habitants>4500000</habitants>
         <chagars>
             <chagar num="52" visibilite="tous">Les canaux souterrains de Pôle</chagar>
         </chagars>
+        <infosEdL>
+            <chagar num="93">Scénario 1 - les excavées, 2ème partie</chagar>
+            <chagar num="46">Les deux types de boussoles de Tanæphis (page 2)</chagar>
+            <chagar num="98">Scénario 1 - les excavées, Bonus #2</chagar>
+        </infosEdL>
         <coordonnees>
             <lat>0</lat>
             <lng>0</lng>
@@ -102,6 +110,9 @@
             <lat>107.5</lat>
             <lng>9.5</lng>
         </coordonnees>
+        <infosEdL>
+            <chagar num="105">Scénario 4 - promesses de mort, 2ème partie</chagar>
+        </infosEdL>
     </lieu>
     <lieu>
         <nom>Markony</nom>
@@ -116,6 +127,9 @@
             <lat>124</lat>
             <lng>61</lng>
         </coordonnees>
+        <infosEdL>
+            <chagar num="100">Scénario 2 - une légende, 2ème partie</chagar>
+        </infosEdL>
     </lieu>
     <lieu>
         <nom>Castelgorn</nom>
@@ -152,6 +166,11 @@
             <lat>37</lat>
             <lng>87.5</lng>
         </coordonnees>
+        <infosEdL>
+            <chagar num="95">Scénario 1 - les excavées, 4ème partie</chagar>
+            <chagar num="96">Scénario 1 - les excavées, 5ème partie</chagar>
+            <chagar num="98">Scénario 1 - les excavées, Bonus #2</chagar>
+        </infosEdL>
     </lieu>
     <lieu>
         <nom>Citadelle des Glaces</nom>
@@ -164,6 +183,12 @@
             <lat>55</lat>
             <lng>39.5</lng>
         </coordonnees>
+        <infosEdL>
+            <chagar num="96">Scénario 1 - les excavées, 5ème partie</chagar>
+            <chagar num="98">Scénario 1 - les excavées, Bonus #2</chagar>
+            <chagar num="99">Scénario 2 - une légende, 1ère partie</chagar>
+            <chagar num="100">Scénario 2 - une légende, 2ème partie</chagar>
+        </infosEdL>
     </lieu>
     <lieu>
         <nom>Fort des obstinés</nom>
@@ -383,6 +408,10 @@
             <lat>5.5</lat>
             <lng>133.5</lng>
         </coordonnees>
+        <infosEdL>
+            <chagar num="99">Scénario 2 - une légende, 1ère partie</chagar>
+            <chagar num="100">Scénario 2 - une légende, 2ème partie</chagar>
+        </infosEdL>
     </lieu>
     <lieu>
         <nom>Nasvea</nom>

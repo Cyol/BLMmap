@@ -1,5 +1,5 @@
 /*********************************************************************
- *                     Carte Bloodlust CSS                           *
+ *                     Carte Bloodlust JS                            *
  * Author     : Cyol http://cyol.fr/blog                             *
  * Licence    : CC BY http://creativecommons.org/licenses/by/3.0/fr/ *
  *********************************************************************/
@@ -49,9 +49,14 @@ function displayDataVille($data)
 {
     var nom = $data.children("nom").text();
     var $coordonnees = $data.children("coordonnees");
-    var lat, lng, affiliation, habitants, divers, chagars;
+    var lat, lng, affiliation, habitants, divers, chagars, infosEdL;
     lat = $coordonnees.find("lat").text();
     lng = $coordonnees.find("lng").text();
+    var $nomsAlternatifs = $data.children("nomsAlternatifs");
+    var nomsAlternatifs = "";
+    $nomsAlternatifs.find("nom").each( function(){
+        nomsAlternatifs+=$(this).text();
+    });
     affiliation = $data.children("affiliation").text();
     habitants = $data.children("habitants").text();
     divers = $data.children("divers").text();
@@ -60,36 +65,28 @@ function displayDataVille($data)
     $chagars.find("chagar").each( function(){
         chagars.push(new $oChagar($(this).attr("num"), $(this).text(), $(this).attr("visibilite")));
     } );
-    dataVille.push({"loc" : [lat, lng], "title" : nom});
-    infosVilles[nom] = {"affiliation" : affiliation, "habitants" : habitants, "divers" : divers, "chagars" : chagars};
+    //Liste des Chagars Eclats de Lune
+    var $infosEdL = $data.children("infosEdL");
+    infosEdL = [];
+    $infosEdL.find("chagar").each( function(){
+        infosEdL.push(new $oChagar($(this).attr("num"), $(this).text(), $(this).attr("visibilite")));
+    } );
+
+    dataVille.push({"loc" : [lat, lng], "title" : nom, "nomsAlternatifs" : nomsAlternatifs});
+    infosVilles[nom] = {"loc" : [lat, lng], "affiliation" : affiliation, "habitants" : habitants, "divers" : divers, "chagars" : chagars, "infosEdL" : infosEdL};
 }
 
-function createLayerEclatLune()
+function createInfosVille(nomVille, edl)
 {
-    var VaseuxDeChagre = L.circle([-135, -87], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 5
-    });
-    VaseuxDeChagre.bindPopup(
-        "<h2>EdL : Scénario 1 - les excavées</h2>"+
-        "<h3>Vaseux-de-Chagre</h3>"+
-        '<ul>'+
-            '<li><a href="http://bit.ly/Chagar-92" target="_blank">1ère partie</a></li>'+
-            '<li><a href="http://bit.ly/Chagar-93" target="_blank">2ème partie</a></li>'+
-        '</ul>'
-    );
-
-    return  L.layerGroup([VaseuxDeChagre]);
-}
-
-function createInfosVille(nomVille)
-{
+    if(typeof edl === "undefined")
+    {
+        edl = false;
+    }
     var affiliation = infosVilles[nomVille].affiliation;
     var habitants = infosVilles[nomVille].habitants;
     var divers = infosVilles[nomVille].divers;
     var chagars = infosVilles[nomVille].chagars;
+    var infosEdL = infosVilles[nomVille].infosEdL;
     var infos = '<h2>' + nomVille + '</h2>';
     infos += '<ul>';
     if(affiliation !== "")
@@ -115,6 +112,16 @@ function createInfosVille(nomVille)
             }
             infos += '</li>';
         }
+    }
+    if(edl && infosEdL.length)
+    {
+        infos += '<li><b>Eclats de Lune</b> <span class="reserve">(Réservé MJ)</span> :<ul class="chagarEdL">';
+        for(var i=0; i<infosEdL.length; i++)
+        {
+            infos += '<li><b>Chagar ' + infosEdL[i].oC_getNum() + ' : </b>'+infosEdL[i].oC_getLink();
+        }
+        infos += '</ul></li>';
+
     }
     infos += '</ul>';
 
@@ -149,11 +156,9 @@ function createMap()
     var layerEclatsLune = createLayerEclatLune();
 
     var VillesLayer = L.layerGroup(VillesGroupe);
-    var overlayMaps = {
-        "Villes": VillesLayer
-        /* @TODO mettre un layer Eclat de Lune,
-        "EclatsLune": layerEclatsLune*/
-    };
+    var overlayMaps = {};
+    overlayMaps["Villes"] = VillesLayer;
+    overlayMaps[ECLAT_LUNE_LAYER_NAME] = layerEclatsLune;
 
     var baseLayer = L.tileLayer('tiles/{z}/{x}/{y}.png', {
         minZoom: mapMinZoom, maxZoom: mapMaxZoom,
@@ -167,7 +172,7 @@ function createMap()
         minZoom: mapMinZoom,
         crs: customCRS,
         zoom: mapMaxZoom,
-        center: new L.latLng(dataVille[0].loc),
+        center: new L.latLng(infosVilles["Pôle"].loc),
         layers : [baseLayer],
         zoomControl:false
     });
@@ -178,13 +183,41 @@ function createMap()
         callResponse(dataVille);
         return {	//called to stop previous requests on map move
             abort: function() {
-                console.log('aborted request:'+ text);
             }
         };
     }
 
+    function formatData(json) {	//default callback for format data to indexed data
+        var jsonret = {};
+        for(var i in json)
+        {
+            jsonret[json[i].title] = L.latLng(json[i].loc);
+            jsonret[json[i].title].nomsAlternatifs = json[i].nomsAlternatifs;
+        }
+        return jsonret;
+    }
+
+    function filtreRecherche (text,records) {
+        var regSearch, frecords = {};
+        text = text.replace(/[.*+?^${}()|[\]\\]/g, '');  //sanitize remove all special characters
+        if(text==='')
+            return [];
+        //La même mais pour remplacer les accents
+        text = chaineMinusculeSansAccent(text);
+        regSearch = new RegExp(text, 'i');
+        for(var key in records) {
+            //Recherche dans le dictionnaire : la key (nom de base) et les noms alternatifs
+            var dictionnaire = chaineMinusculeSansAccent(key);
+            dictionnaire+=records[key].nomsAlternatifs;
+            if( regSearch.test(dictionnaire) )
+                frecords[key]= records[key];
+        }
+
+        return frecords;
+    }
+
     //Pour customiser les suggestions de la recherche
-    //@TODO à creuser pour présenter l'affiliation par couleur ?
+    //@TODO à creuser pour présenter l'affiliation par couleur  => Ajouter l'info comme nomsAlternatifs pour l'exploiter
     function customTip(text,val) {
         return '<a href="#">'+text+'</a>';
     }
@@ -193,10 +226,13 @@ function createMap()
     map.addLayer(markersLayer);
     var controlSearch = new L.Control.Search({
         sourceData: localData,
+        formatData: formatData,
         buildTip: customTip,
         textPlaceholder: 'Ville...',
         zoom: 4,
         markerLocation: true,
+        initial : false,
+        filterData: filtreRecherche,
         marker: {
             icon: false,
             circle: false
@@ -216,12 +252,20 @@ function createMap()
     });
 
     //Ajout d'un outil pour le contrôle des layers à afficher, ceux de overlayMaps sont facultatifs avec checkbox
-    //le null correspond aux layer obligatoire, apr exemple si on utilise plusieurs fond pour les cartes (couleur, noir&blanc, ...)
+    //le null correspond aux layer obligatoire, par exemple si on utilise plusieurs fond pour les cartes (couleur, noir&blanc, ...)
     L.control.layers(null, overlayMaps, {position:'topleft'}).addTo(map);
     //Ajout du controle de search
     map.addControl(controlSearch);
     //Ajout du controle de zoom pour qu'il soit sous le controle de layer
     L.control.zoom({position:'topleft'}).addTo(map);
+    map.on('overlayadd', function(eo) {
+        if(eo.name === ECLAT_LUNE_LAYER_NAME)
+        {
+            //On centre sur Vaseux
+            map.setView(new L.latLng([-135, -87]), 3, {animate:true, duration:3});
+            layerEclatsLune.snakeIn();
+        }
+    });
 
     var popup = L.popup();
 
@@ -235,10 +279,53 @@ function createMap()
     {
         map.on('click', onMapClick);
     }
+}
+/*****************
+ ** UTILITAIRES **
+ *****************/
+/**
+ * Supprime d'une chaine les caractères spéciaux et remplace les caractères accentués par leur version sans accent
+ * @param chaine
+ * @returns {XML|string|void}
+ */
+function chaineMinusculeSansAccent(chaine)
+{
+    var accents = {
+        a:"àáâãäå",
+        A:"ÀÁÂ",
+        e:"èéêë",
+        E:"ÈÉÊË",
+        i:"ìíîï",
+        I:"ÌÍÎÏ",
+        o:"òóôõöø",
+        O:"ÒÓÔÕÖØ",
+        u:"ùúûü",
+        U:"ÙÚÛÜ",
+        y:"ÿ",
+        c: "ç",
+        C:"Ç",
+        n:"ñ",
+        N:"Ñ"
+    };
+    function  getJSONKey(key){
+        for (acc in accents){
+            if (accents[acc].indexOf(key)>-1){return acc}
+        }
+    }
+    var regstring ="";
+    for (acc in accents){
+        regstring+=accents[acc]
+    }
+    reg=new RegExp("["+regstring+"]","g" );
 
-
+    return chaine.replace(reg,function(t){ return getJSONKey(t) });
 }
 
+/**
+ * Récupère les informations passée en get dans l'url
+ * @param param
+ * @returns {*}
+ */
 function $_GET(param) {
     var vars = {};
     window.location.href.replace( location.hash, '' ).replace(
@@ -273,6 +360,4 @@ $(document).ready(function ()
             }
         }
     );
-
-
 });
