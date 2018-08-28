@@ -10,9 +10,9 @@
             <chagar num="52" visibilite="tous">Les canaux souterrains de Pôle</chagar>
         </chagars>
         <infosEdL>
-            <chagar num="93">Scénario 1 - les excavées, 2ème partie</chagar>
+            <chagar num="93">Scénario 01 - LES EXCAVÉES, 2ème partie</chagar>
             <chagar num="46">Les deux types de boussoles de Tanæphis (page 2)</chagar>
-            <chagar num="98">Scénario 1 - les excavées, Bonus #2</chagar>
+            <chagar num="98">Scénario 01 - LES EXCAVÉES, Bonus #2</chagar>
         </infosEdL>
         <coordonnees>
             <lat>0</lat>
@@ -111,7 +111,7 @@
             <lng>9.5</lng>
         </coordonnees>
         <infosEdL>
-            <chagar num="105">Scénario 4 - promesses de mort, 2ème partie</chagar>
+            <chagar num="105">Scénario 04 - PROMESSES DE MORT, 2ème partie</chagar>
         </infosEdL>
     </lieu>
     <lieu>
@@ -128,7 +128,7 @@
             <lng>61</lng>
         </coordonnees>
         <infosEdL>
-            <chagar num="100">Scénario 2 - une légende, 2ème partie</chagar>
+            <chagar num="100">Scénario 02 - UNE LÉGENDE, 2ème partie</chagar>
         </infosEdL>
     </lieu>
     <lieu>
@@ -167,9 +167,9 @@
             <lng>87.5</lng>
         </coordonnees>
         <infosEdL>
-            <chagar num="95">Scénario 1 - les excavées, 4ème partie</chagar>
-            <chagar num="96">Scénario 1 - les excavées, 5ème partie</chagar>
-            <chagar num="98">Scénario 1 - les excavées, Bonus #2</chagar>
+            <chagar num="95">Scénario 01 - LES EXCAVÉES, 4ème partie</chagar>
+            <chagar num="96">Scénario 01 - LES EXCAVÉES, 5ème partie</chagar>
+            <chagar num="98">Scénario 01 - LES EXCAVÉES, Bonus #2</chagar>
         </infosEdL>
     </lieu>
     <lieu>
@@ -184,10 +184,10 @@
             <lng>39.5</lng>
         </coordonnees>
         <infosEdL>
-            <chagar num="96">Scénario 1 - les excavées, 5ème partie</chagar>
-            <chagar num="98">Scénario 1 - les excavées, Bonus #2</chagar>
-            <chagar num="99">Scénario 2 - une légende, 1ère partie</chagar>
-            <chagar num="100">Scénario 2 - une légende, 2ème partie</chagar>
+            <chagar num="96">Scénario 01 - LES EXCAVÉES, 5ème partie</chagar>
+            <chagar num="98">Scénario 01 - LES EXCAVÉES, Bonus #2</chagar>
+            <chagar num="99">Scénario 02 - UNE LÉGENDE, 1ère partie</chagar>
+            <chagar num="100">Scénario 02 - UNE LÉGENDE, 2ème partie</chagar>
         </infosEdL>
     </lieu>
     <lieu>
@@ -246,9 +246,8 @@
     <lieu>
         <nom>Citadelle du Loup Gris</nom>
         <affiliation>Piorad</affiliation>
-        <chagar num="64" visibilite="tous">La chaîne des fort 1/2</chagar>
         <chagars>
-            <chagar>http://bit.ly/Chagar-64</chagar>
+            <chagar num="64" visibilite="tous">La chaîne des fort 1/2</chagar>
         </chagars>
         <coordonnees>
             <lat>57.5</lat>
@@ -409,8 +408,8 @@
             <lng>133.5</lng>
         </coordonnees>
         <infosEdL>
-            <chagar num="99">Scénario 2 - une légende, 1ère partie</chagar>
-            <chagar num="100">Scénario 2 - une légende, 2ème partie</chagar>
+            <chagar num="99">Scénario 02 - UNE LÉGENDE, 1ère partie</chagar>
+            <chagar num="100">Scénario 02 - UNE LÉGENDE, 2ème partie</chagar>
         </infosEdL>
     </lieu>
     <lieu>

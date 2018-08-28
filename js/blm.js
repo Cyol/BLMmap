@@ -153,12 +153,24 @@ function createMap()
         VillesGroupe.push(marker);
     }
 
-    var layerEclatsLune = createLayerEclatLune();
-
     var VillesLayer = L.layerGroup(VillesGroupe);
+    //création des informations pour Eclats de Lune
+    createLayerEclatsLune();
+    var eclatsDeLuneGroup = L.layerGroup([]);
+    var layerEdLScenario01 = createLayerEdLScenario01();
+    var layerEdLScenario02 = createLayerEdLScenario02();
+    var layerEdLScenario03 = createLayerEdLScenario03();
+    var layerEdLScenario04 = createLayerEdLScenario04();
+    var layerEdLScenario05 = createLayerEdLScenario05();
+    var layerEdLScenario05bis = createLayerEdLScenario05bis();
     var overlayMaps = {};
     overlayMaps["Villes"] = VillesLayer;
-    overlayMaps[ECLAT_LUNE_LAYER_NAME] = layerEclatsLune;
+    overlayMaps[ECLATS_LUNE_LAYER_NAME] = eclatsDeLuneGroup;
+    overlayMaps[ECLATS_LUNE_LAYER_SC01_NAME] = layerEdLScenario01;
+    overlayMaps[ECLATS_LUNE_LAYER_SC02_NAME] = layerEdLScenario02;
+    overlayMaps[ECLATS_LUNE_LAYER_SC03_NAME] = layerEdLScenario03;
+    overlayMaps[ECLATS_LUNE_LAYER_SC04_NAME] = layerEdLScenario04;
+    overlayMaps[ECLATS_LUNE_LAYER_SC05_NAME] = layerEdLScenario05;
 
     var baseLayer = L.tileLayer('tiles/{z}/{x}/{y}.png', {
         minZoom: mapMinZoom, maxZoom: mapMaxZoom,
@@ -254,16 +266,72 @@ function createMap()
     //Ajout d'un outil pour le contrôle des layers à afficher, ceux de overlayMaps sont facultatifs avec checkbox
     //le null correspond aux layer obligatoire, par exemple si on utilise plusieurs fond pour les cartes (couleur, noir&blanc, ...)
     L.control.layers(null, overlayMaps, {position:'topleft'}).addTo(map);
+
+    //On cache les liens Eclats de Lune dans le contrôle des layers
+    $(".leaflet-control-layers-overlays>label:has(span.EdLGroupe)").addClass("layerEdLGroupe");
+    $(".layerEdLGroupe input").hide();
+    $(".leaflet-control-layers-overlays>label:has(span.EdLEtape)").addClass("layerEdL");
+
     //Ajout du controle de search
     map.addControl(controlSearch);
+
     //Ajout du controle de zoom pour qu'il soit sous le controle de layer
     L.control.zoom({position:'topleft'}).addTo(map);
     map.on('overlayadd', function(eo) {
-        if(eo.name === ECLAT_LUNE_LAYER_NAME)
+        switch(eo.name)
         {
-            //On centre sur Vaseux
-            map.setView(new L.latLng([-135, -87]), 3, {animate:true, duration:3});
-            layerEclatsLune.snakeIn();
+            case ECLATS_LUNE_LAYER_SC01_NAME :
+                layerEdLScenario01.on('snakestart', function (ev) {
+                    //On centre sur Vaseux
+                    map.setView(new L.latLng([-135, -87]), 3, {animate:true, duration:3});
+                })
+                .on('snakeend', function (ev) {
+                    //On centre sur La Citadelle des Glaces
+                    map.setView(new L.latLng(infosVilles["Citadelle des Glaces"].loc), 4, {animate:true, duration:3});
+                })
+                .snakeIn();
+                break;
+            case ECLATS_LUNE_LAYER_SC02_NAME :
+                layerEdLScenario02.on('snakestart', function (ev) {
+                    //On centre sur La Citadelle des Glaces
+                    map.setView(new L.latLng(infosVilles["Citadelle des Glaces"].loc), 3, {animate:true, duration:3});
+                })
+                .on('snakeend', function (ev) {
+                    //On centre sur LesPassesMaltorses
+                    map.setView(new L.latLng([137,42.5]), 4, {animate:true, duration:3});
+                })
+                .snakeIn();
+                break;
+            case ECLATS_LUNE_LAYER_SC03_NAME :
+                //On centre sur LesPassesMaltorses
+                map.setView(new L.latLng([137,42.5]), 4, {animate:true, duration:3});
+                break;
+            case ECLATS_LUNE_LAYER_SC04_NAME :
+                layerEdLScenario04.on('snakestart', function (ev) {
+                    //On centre sur LesPassesMaltorses
+                    map.setView(new L.latLng([137,42.5]), 3, {animate:true, duration:3});
+                })
+                    .on('snakeend', function (ev) {
+                        //On centre sur LeBoisDePercechargneLoc
+                        map.setView(new L.latLng([79, -10.5]), 4, {animate:true, duration:3});
+                    })
+                    .snakeIn();
+                break;
+            case ECLATS_LUNE_LAYER_SC05_NAME :
+                layerEdLScenario05.on('snakestart', function (ev) {
+                    //On centre sur La chaîne des Egides
+                    map.setView(new L.latLng([14, -60]), 2, {animate:true, duration:3});
+                    //On lance en parralèle un snake sur layerEdLScenario05bis
+                    map.addLayer(layerEdLScenario05bis);
+                    layerEdLScenario05bis.snakeIn();
+                })
+                    .on('snakeend', function (ev) {
+                        //On centre sur Durville
+                        map.setView(new L.latLng(infosVilles["Durville"].loc), 4, {animate:true, duration:3});
+                    })
+                    .snakeIn();
+                break;
+            default:
         }
     });
 
@@ -339,6 +407,15 @@ function $_GET(param) {
         return vars[param] ? vars[param] : null;
     }
     return vars;
+}
+
+/**
+ * @TODO Renvoie les coordonnées d'un event de snake
+ * @param ev
+ */
+function getSnakeEvCoord(ev)
+{
+    console.log(ev.target._map._animateToCenter);
 }
 
 $(document).ready(function ()

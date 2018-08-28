@@ -1,3 +1,40 @@
+/*
+	Name					Data passed			   Description
+
+	Managed Events:
+	 search:locationfound	{latlng, title, layer} fired after moved and show markerLocation
+	 search:expanded		{}					   fired after control was expanded
+	 search:collapsed		{}					   fired after control was collapsed
+ 	 search:cancel			{}					   fired after cancel button clicked
+
+	Public methods:
+	 setLayer()				L.LayerGroup()         set layer search at runtime
+	 showAlert()            'Text message'         show alert message
+	 searchText()			'Text searched'        search text by external code
+*/
+
+//TODO implement can do research on multiple sources layers and remote		
+//TODO history: false,		//show latest searches in tooltip		
+//FIXME option condition problem {autoCollapse: true, markerLocation: true} not show location
+//FIXME option condition problem {autoCollapse: false }
+//
+//TODO here insert function  search inputText FIRST in _recordsCache keys and if not find results.. 
+//  run one of callbacks search(sourceData,jsonpUrl or options.layer) and run this.showTooltip
+//
+//TODO change structure of _recordsCache
+//	like this: _recordsCache = {"text-key1": {loc:[lat,lng], ..other attributes.. }, {"text-key2": {loc:[lat,lng]}...}, ...}
+//	in this mode every record can have a free structure of attributes, only 'loc' is required
+//TODO important optimization!!! always append data in this._recordsCache
+//  now _recordsCache content is emptied and replaced with new data founded
+//  always appending data on _recordsCache give the possibility of caching ajax, jsonp and layersearch!
+//
+//TODO here insert function  search inputText FIRST in _recordsCache keys and if not find results.. 
+//  run one of callbacks search(sourceData,jsonpUrl or options.layer) and run this.showTooltip
+//
+//TODO change structure of _recordsCache
+//	like this: _recordsCache = {"text-key1": {loc:[lat,lng], ..other attributes.. }, {"text-key2": {loc:[lat,lng]}...}, ...}
+//	in this way every record can have a free structure of attributes, only 'loc' is required
+
 (function (factory) {
     if(typeof define === 'function' && define.amd) {
     //AMD
@@ -13,74 +50,23 @@
     }
 })(function (L) {
 
-	function _getPath(obj, prop) {
-		var parts = prop.split('.'),
-			last = parts.pop(),
-			len = parts.length,
-			cur = parts[0],
-			i = 1;
-
-		if(len > 0)
-			while((obj = obj[cur]) && i < len)
-				cur = parts[i++];
-
-		if(obj)
-			return obj[last];
-	}
-
-	function _isObject(obj) {
-		return Object.prototype.toString.call(obj) === "[object Object]";
-	}
-
-//TODO implement can do research on multiple sources layers and remote		
-//TODO history: false,		//show latest searches in tooltip		
-//FIXME option condition problem {autoCollapse: true, markerLocation: true} not show location
-//FIXME option condition problem {autoCollapse: false }
-//
-//TODO here insert function that search inputText FIRST in _recordsCache keys and if not find results.. 
-//  run one of callbacks search(sourceData,jsonpUrl or options.layer) and run this.showTooltip
-//
-//TODO change structure of _recordsCache
-//	like this: _recordsCache = {"text-key1": {loc:[lat,lng], ..other attributes.. }, {"text-key2": {loc:[lat,lng]}...}, ...}
-//	in this mode every record can have a free structure of attributes, only 'loc' is required
-//TODO important optimization!!! always append data in this._recordsCache
-//  now _recordsCache content is emptied and replaced with new data founded
-//  always appending data on _recordsCache give the possibility of caching ajax, jsonp and layersearch!
-//
-//TODO here insert function that search inputText FIRST in _recordsCache keys and if not find results.. 
-//  run one of callbacks search(sourceData,jsonpUrl or options.layer) and run this.showTooltip
-//
-//TODO change structure of _recordsCache
-//	like this: _recordsCache = {"text-key1": {loc:[lat,lng], ..other attributes.. }, {"text-key2": {loc:[lat,lng]}...}, ...}
-//	in this way every record can have a free structure of attributes, only 'loc' is required
 
 L.Control.Search = L.Control.extend({
-	includes: L.Mixin.Events,
-	//
-	//	Name					Data passed			   Description
-	//
-	//Managed Events:
-	//	search:locationfound	{latlng, title, layer} fired after moved and show markerLocation
-	//	search:expanded			{}					   fired after control was expanded
-	//  search:collapsed		{}					   fired after control was collapsed
-	//
-	//Public methods:
-	//  setLayer()				L.LayerGroup()         set layer search at runtime
-	//  showAlert()             'Text message'         show alert message
-	//  searchText()			'Text searched'        search text by external code
-	//
+	
+	includes: L.version[0]==='1' ? L.Evented.prototype : L.Mixin.Events,
+
 	options: {
-		url: '',						//url for search by ajax request, ex: "search.php?q={s}". Can be function that returns string for dynamic parameter setting
+		url: '',						//url for search by ajax request, ex: "search.php?q={s}". Can be function to returns string for dynamic parameter setting
 		layer: null,					//layer where search markers(is a L.LayerGroup)				
-		sourceData: null,				//function that fill _recordsCache, passed searching text by first param and callback in second				
-		//TODO implements uniq option 'sourceData' that recognizes source type: url,array,callback or layer				
+		sourceData: null,				//function to fill _recordsCache, passed searching text by first param and callback in second				
+		//TODO implements uniq option 'sourceData' to recognizes source type: url,array,callback or layer				
 		jsonpParam: null,				//jsonp param name for search by jsonp service, ex: "callback"
 		propertyLoc: 'loc',				//field for remapping location, using array: ['latname','lonname'] for select double fields(ex. ['lat','lon'] ) support dotted format: 'prop.subprop.title'
 		propertyName: 'title',			//property in marker.options(or feature.properties for vector layer) trough filter elements in layer,
 		formatData: null,				//callback for reformat all data from source to indexed data object
 		filterData: null,				//callback for filtering data from text searched, params: textSearch, allRecords
 		moveToLocation: null,			//callback run on location found, params: latlng, title, map
-		buildTip: null,					//function that return row tip html node(or html string), receive text tooltip in first param
+		buildTip: null,					//function to return row tip html node(or html string), receive text tooltip in first param
 		container: '',					//container id to insert Search Control		
 		zoom: null,						//default zoom level for move to location
 		minLength: 1,					//minimal text length for autocomplete
@@ -88,7 +74,7 @@ L.Control.Search = L.Control.extend({
 		casesensitive: false,			//search elements in case sensitive text
 		autoType: true,					//complete input with first suggested result and select this filled-in text.
 		delayType: 400,					//delay while typing for show tooltip
-		tooltipLimit: -1,				//limit max results to show in tooltip. -1 for no limit.
+		tooltipLimit: -1,				//limit max results to show in tooltip. -1 for no limit, 0 for no results
 		tipAutoSubmit: true,			//auto map panTo when click on tooltip
 		firstTipSubmit: false,			//auto select first result con enter click
 		autoResize: true,				//autoresize on input change
@@ -98,8 +84,8 @@ L.Control.Search = L.Control.extend({
 		textErr: 'Location not found',	//error message
 		textCancel: 'Cancel',		    //title in cancel button		
 		textPlaceholder: 'Search...',   //placeholder value			
-		position: 'topleft',
 		hideMarkerOnCollapse: false,    //remove circle and marker on search control collapsed		
+		position: 'topleft',		
 		marker: {						//custom L.Marker or false for hide
 			icon: false,				//custom L.Icon for maker location or false for hide
 			animate: true,				//animate a circle over location found
@@ -113,6 +99,25 @@ L.Control.Search = L.Control.extend({
 		}
 	},
 
+	_getPath: function(obj, prop) {
+		var parts = prop.split('.'),
+			last = parts.pop(),
+			len = parts.length,
+			cur = parts[0],
+			i = 1;
+
+		if(len > 0)
+			while((obj = obj[cur]) && i < len)
+				cur = parts[i++];
+
+		if(obj)
+			return obj[last];
+	},
+
+	_isObject: function(obj) {
+		return Object.prototype.toString.call(obj) === "[object Object]";
+	},
+
 	initialize: function(options) {
 		L.Util.setOptions(this, options || {});
 		this._inputMinSize = this.options.textPlaceholder ? this.options.textPlaceholder.length : 10;
@@ -122,7 +127,7 @@ L.Control.Search = L.Control.extend({
 		this._moveToLocation = this.options.moveToLocation || this._defaultMoveToLocation;
 		this._autoTypeTmp = this.options.autoType;	//useful for disable autoType temporarily in delete/backspace keydown
 		this._countertips = 0;		//number of tips items
-		this._recordsCache = {};	//key,value table! that store locations! format: key,latlng
+		this._recordsCache = {};	//key,value table! to store locations! format: key,latlng
 		this._curReq = null;
 	},
 
@@ -143,7 +148,7 @@ L.Control.Search = L.Control.extend({
 			if(this.options.marker instanceof L.Marker || this.options.marker instanceof L.CircleMarker)
 				this._markerSearch = this.options.marker;
 
-			else if(_isObject(this.options.marker))
+			else if(this._isObject(this.options.marker))
 				this._markerSearch = new L.Control.Search.Marker([0,0], this.options.marker);
 
 			this._markerSearch._isMarkerSearch = true;
@@ -195,13 +200,14 @@ L.Control.Search = L.Control.extend({
 	},
 	
 	showAlert: function(text) {
+		var self = this;
 		text = text || this.options.textErr;
 		this._alert.style.display = 'block';
 		this._alert.innerHTML = text;
 		clearTimeout(this.timerAlert);
-		var that = this;		
+		
 		this.timerAlert = setTimeout(function() {
-			that.hideAlert();
+			self.hideAlert();
 		},this.options.autoCollapseTime);
 		return this;
 	},
@@ -218,6 +224,7 @@ L.Control.Search = L.Control.extend({
 		this._input.focus();
 		this._cancel.style.display = 'none';
 		this._hideTooltip();
+		this.fire('search:cancel');
 		return this;
 	},
 	
@@ -253,11 +260,11 @@ L.Control.Search = L.Control.extend({
 	},
 	
 	collapseDelayed: function() {	//collapse after delay, used on_input blur
+		var self = this;
 		if (!this.options.autoCollapse) return this;
-		var that = this;
 		clearTimeout(this.timerCollapse);
 		this.timerCollapse = setTimeout(function() {
-			that.collapse();
+			self.collapse();
 		}, this.options.autoCollapseTime);
 		return this;		
 	},
@@ -299,7 +306,7 @@ L.Control.Search = L.Control.extend({
 
 		L.DomEvent
 			.disableClickPropagation(input)
-			.on(input, 'keydown', this._handleKeypress, this)
+			.on(input, 'keyup', this._handleKeypress, this)
 			.on(input, 'blur', this.collapseDelayed, this)
 			.on(input, 'focus', this.collapseDelayedStop, this);
 		
@@ -335,19 +342,18 @@ L.Control.Search = L.Control.extend({
 	},
 
 	_createTooltip: function(className) {
+		var self = this;		
 		var tool = L.DomUtil.create('ul', className, this._container);
 		tool.style.display = 'none';
-
-		var that = this;
 		L.DomEvent
 			.disableClickPropagation(tool)
 			.on(tool, 'blur', this.collapseDelayed, this)
 			.on(tool, 'mousewheel', function(e) {
-				that.collapseDelayedStop();
+				self.collapseDelayedStop();
 				L.DomEvent.stopPropagation(e);//disable zoom map
 			}, this)
 			.on(tool, 'mouseover', function(e) {
-				that.collapseDelayedStop();
+				self.collapseDelayedStop();
 			}, this);
 		return tool;
 	},
@@ -418,33 +424,39 @@ L.Control.Search = L.Control.extend({
 	},
 
 	showTooltip: function(records) {
-		var tip;
+		
 
 		this._countertips = 0;
-				
 		this._tooltip.innerHTML = '';
 		this._tooltip.currentSelection = -1;  //inizialized for _handleArrowSelect()
 
-		for(var key in records)//fill tooltip
+		if(this.options.tooltipLimit)
 		{
-			if(++this._countertips == this.options.tooltipLimit) break;
+			for(var key in records)//fill tooltip
+			{
+				if(this._countertips === this.options.tooltipLimit)
+					break;
+				
+				this._countertips++;
 
-			tip = this._createTip(key, records[key] );
-
-			this._tooltip.appendChild(tip);
+				this._tooltip.appendChild( this._createTip(key, records[key]) );
+			}
 		}
 		
 		if(this._countertips > 0)
 		{
 			this._tooltip.style.display = 'block';
+			
 			if(this._autoTypeTmp)
 				this._autoType();
+
 			this._autoTypeTmp = this.options.autoType;//reset default value
 		}
 		else
 			this._hideTooltip();
 
 		this._tooltip.scrollTop = 0;
+
 		return this._countertips;
 	},
 
@@ -455,16 +467,17 @@ L.Control.Search = L.Control.extend({
 	},
 
 	_defaultFormatData: function(json) {	//default callback for format data to indexed data
-		var propName = this.options.propertyName,
+		var self = this,
+			propName = this.options.propertyName,
 			propLoc = this.options.propertyLoc,
 			i, jsonret = {};
 
 		if( L.Util.isArray(propLoc) )
 			for(i in json)
-				jsonret[ _getPath(json[i],propName) ]= L.latLng( json[i][ propLoc[0] ], json[i][ propLoc[1] ] );
+				jsonret[ self._getPath(json[i],propName) ]= L.latLng( json[i][ propLoc[0] ], json[i][ propLoc[1] ] );
 		else
 			for(i in json)
-				jsonret[ _getPath(json[i],propName) ]= L.latLng( _getPath(json[i],propLoc) );
+				jsonret[ self._getPath(json[i],propName) ]= L.latLng( self._getPath(json[i],propLoc) );
 		//TODO throw new Error("propertyName '"+propName+"' not found in JSON data");
 		return jsonret;
 	},
@@ -498,7 +511,7 @@ L.Control.Search = L.Control.extend({
 		//TODO add rnd param or randomize callback name! in recordsFromAjax			
 		
 		request.open("GET", url);
-		var that = this;
+		
 
 		request.onload = function() {
 			callAfter( JSON.parse(request.responseText) );
@@ -512,79 +525,97 @@ L.Control.Search = L.Control.extend({
 		request.send();
 		return request;   
 	},
+
+  _searchInLayer: function(layer, retRecords, propName) {
+    var self = this, loc;
+
+    if(layer instanceof L.Control.Search.Marker) return;
+
+    if(layer instanceof L.Marker || layer instanceof L.CircleMarker)
+    {
+      if(self._getPath(layer.options,propName))
+      {
+        loc = layer.getLatLng();
+        loc.layer = layer;
+        retRecords[ self._getPath(layer.options,propName) ] = loc;
+      }
+      else if(self._getPath(layer.feature.properties,propName))
+      {
+        loc = layer.getLatLng();
+        loc.layer = layer;
+        retRecords[ self._getPath(layer.feature.properties,propName) ] = loc;
+      }
+      else {
+        //throw new Error("propertyName '"+propName+"' not found in marker"); 
+        console.warn("propertyName '"+propName+"' not found in marker"); 
+      }
+    }
+    else if(layer instanceof L.Path || layer instanceof L.Polyline || layer instanceof L.Polygon)
+    {
+      if(self._getPath(layer.options,propName))
+      {
+        loc = layer.getBounds().getCenter();
+        loc.layer = layer;
+        retRecords[ self._getPath(layer.options,propName) ] = loc;
+      }
+      else if(self._getPath(layer.feature.properties,propName))
+      {
+        loc = layer.getBounds().getCenter();
+        loc.layer = layer;
+        retRecords[ self._getPath(layer.feature.properties,propName) ] = loc;
+      }
+      else {
+        //throw new Error("propertyName '"+propName+"' not found in shape"); 
+        console.warn("propertyName '"+propName+"' not found in shape"); 
+      }
+    }
+    else if(layer.hasOwnProperty('feature'))//GeoJSON
+    {
+      if(layer.feature.properties.hasOwnProperty(propName))
+      {
+        if(layer.getLatLng && typeof layer.getLatLng === 'function') {
+          loc = layer.getLatLng();
+          loc.layer = layer;			
+          retRecords[ layer.feature.properties[propName] ] = loc;
+        } else if(layer.getBounds && typeof layer.getBounds === 'function') {
+          loc = layer.getBounds().getCenter();
+          loc.layer = layer;			
+          retRecords[ layer.feature.properties[propName] ] = loc;
+        } else {
+          console.warn("Unknown type of Layer");
+        }
+      }
+      else {
+        //throw new Error("propertyName '"+propName+"' not found in feature");
+        console.warn("propertyName '"+propName+"' not found in feature"); 
+      }
+    }
+    else if(layer instanceof L.LayerGroup)
+    {
+      layer.eachLayer(function (layer) {
+        self._searchInLayer(layer, retRecords, propName);
+      });
+    }
+  },
 	
 	_recordsFromLayer: function() {	//return table: key,value from layer
-		var that = this,
+		var self = this,
 			retRecords = {},
-			propName = this.options.propertyName,
-			loc;
+			propName = this.options.propertyName;
 		
-		this._layer.eachLayer(function(layer) {
-
-			if(layer.hasOwnProperty('_isMarkerSearch')) return;
-
-			if(layer instanceof L.Marker || layer instanceof L.CircleMarker)
-			{
-				try {
-					if(_getPath(layer.options,propName))
-					{
-						loc = layer.getLatLng();
-						loc.layer = layer;
-						retRecords[ _getPath(layer.options,propName) ] = loc;			
-						
-					}
-					else if(_getPath(layer.feature.properties,propName)){
-	
-						loc = layer.getLatLng();
-						loc.layer = layer;
-						retRecords[ _getPath(layer.feature.properties,propName) ] = loc;
-						
-					}
-					else
-						throw new Error("propertyName '"+propName+"' not found in marker");
-					
-				}
-				catch(err){
-					if (console) { console.warn(err); }
-				}
-			}
-            else if(layer.hasOwnProperty('feature'))//GeoJSON
-			{
-				try {
-					if(layer.feature.properties.hasOwnProperty(propName))
-					{
-						loc = layer.getBounds().getCenter();
-						loc.layer = layer;			
-						retRecords[ layer.feature.properties[propName] ] = loc;
-					}
-					else
-						throw new Error("propertyName '"+propName+"' not found in feature");
-				}
-				catch(err){
-					if (console) { console.warn(err); }
-				}
-			}
-			else if(layer instanceof L.LayerGroup)
-            {
-                //TODO: Optimize
-                layer.eachLayer(function(m) {
-                    loc = m.getLatLng();
-                    loc.layer = m;
-                    retRecords[ m.feature.properties[propName] ] = loc;
-                });
-            }
-			
-		},this);
+		this._layer.eachLayer(function (layer) {
+			self._searchInLayer(layer, retRecords, propName);
+		});
 		
 		return retRecords;
 	},
-
+	
 	_autoType: function() {
 		
 		//TODO implements autype without selection(useful for mobile device)
 		
 		var start = this._input.value.length,
-			firstRecord = this._tooltip.firstChild._text,
+			firstRecord = this._tooltip.firstChild ? this._tooltip.firstChild._text : '',
 			end = firstRecord.length;
 
 		if (firstRecord.indexOf(this._input.value) === 0) { // If prefix match
@@ -631,6 +662,7 @@ L.Control.Search = L.Control.extend({
 	},
 	
 	_handleKeypress: function (e) {	//run _input keyup event
+		var self = this;
 
 		switch(e.keyCode)
 		{
@@ -639,7 +671,8 @@ L.Control.Search = L.Control.extend({
 			break;
 			case 13://Enter
 				if(this._countertips == 1 || (this.options.firstTipSubmit && this._countertips > 0))
-					this._handleArrowSelect(1);
+          if(this._tooltip.currentSelection == -1)
+					  this._handleArrowSelect(1);
 				this._handleSubmit();	//do search
 			break;
 			case 38://Up
@@ -669,12 +702,10 @@ L.Control.Search = L.Control.extend({
 
 				if(this._input.value.length >= this.options.minLength)
 				{
-					var that = this;
-
 					clearTimeout(this.timerKeypress);	//cancel last search request while type in				
 					this.timerKeypress = setTimeout(function() {	//delay before request, for limit jsonp/ajax request
 
-						that._fillRecordsCache();
+						self._fillRecordsCache();
 					
 					}, this.options.delayType);
 				}
@@ -700,8 +731,8 @@ L.Control.Search = L.Control.extend({
 	
 	_fillRecordsCache: function() {
 
-		var inputText = this._input.value,
-			that = this, records;
+		var self = this,
+			inputText = this._input.value, records;
 
 		if(this._curReq && this._curReq.abort)
 			this._curReq.abort();
@@ -730,17 +761,17 @@ L.Control.Search = L.Control.extend({
 
 			this._curReq = this._retrieveData.call(this, inputText, function(data) {
 				
-				that._recordsCache = that._formatData(data);
+				self._recordsCache = self._formatData.call(self, data);
 
 				//TODO refact!
-				if(that.options.sourceData)
-					records = that._filterData( that._input.value, that._recordsCache );
+				if(self.options.sourceData)
+					records = self._filterData( self._input.value, self._recordsCache );
 				else
-					records = that._recordsCache;
+					records = self._recordsCache;
 
-				that.showTooltip( records );
+				self.showTooltip( records );
  
-				L.DomUtil.removeClass(that._container, 'search-load');
+				L.DomUtil.removeClass(self._container, 'search-load');
 			});
 		}
 	},
@@ -845,7 +876,7 @@ L.Control.Search = L.Control.extend({
 		});
 
 		self._moveToLocation(latlng, title, self._map);
-		//FIXME autoCollapse option hide self._markerSearch before that visualized!!
+		//FIXME autoCollapse option hide self._markerSearch before visualized!!
 		if(self.options.autoCollapse)
 			self.collapse();
 
@@ -855,7 +886,7 @@ L.Control.Search = L.Control.extend({
 
 L.Control.Search.Marker = L.Marker.extend({
 
-	includes: L.Mixin.Events,
+	includes: L.version[0]==='1' ? L.Evented.prototype : L.Mixin.Events,
 	
 	options: {
 		icon: new L.Icon.Default(),
@@ -877,7 +908,7 @@ L.Control.Search.Marker = L.Marker.extend({
 
 		L.Marker.prototype.initialize.call(this, latlng, options);
 		
-		if( _isObject(this.options.circle) )
+		if( L.Control.Search.prototype._isObject(this.options.circle) )
 			this._circleLoc = new L.CircleMarker(latlng, this.options.circle);
 	},
 

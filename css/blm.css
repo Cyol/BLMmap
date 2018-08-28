@@ -56,6 +56,14 @@ h1> img{
 .leaflet-popup-content>ul{
     padding-left: 10px;
 }
+.leaflet-control-layers-list .reserve,
 .leaflet-popup-content .reserve{
     color: red;
+}
+
+.leaflet-control-layers-list .layerEdLGroupe{
+    font-weight: bold;
+}
+.leaflet-control-layers-list .layerEdL{
+    margin-left: 15px;
 }
