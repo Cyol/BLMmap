@@ -13,6 +13,11 @@
             <chagar num="93">Scénario 01 - LES EXCAVÉES, 2ème partie</chagar>
             <chagar num="46">Les deux types de boussoles de Tanæphis (page 2)</chagar>
             <chagar num="98">Scénario 01 - LES EXCAVÉES, Bonus #2</chagar>
+            <chagar num="115">Scénario 06 - HÉRITAGES, 1ère partie</chagar>
+            <chagar num="116">INTERMÈDE - PÔLE, AVANT BERT</chagar>
+            <chagar num="117">Scénario 06 - HÉRITAGES, 2ème partie</chagar>
+            <chagar num="118">Scénario 06 - HÉRITAGES, 3ème partie</chagar>
+            <chagar num="119">Scénario 07 -  MANGE-COULEURS, 1ère partie</chagar>
         </infosEdL>
         <coordonnees>
             <lat>0</lat>
@@ -600,6 +605,7 @@
     </lieu>
     <lieu>
         <nom>Oasis d'Aghen</nom>
+        <divers><![CDATA[<a href="http://www.cerbere.org/dain/share/blm/oasis-aghen-small.jpg" target="_blank">Visuel de l'Oasis d'Aghen (par Balt)</a>]]></divers>
         <affiliation>Batranoban</affiliation>
         <habitants>9000</habitants>
         <coordonnees>
@@ -608,13 +614,16 @@
         </coordonnees>
     </lieu>
     <lieu>
-        <nom>Mah'ien</nom>
+        <nom>Mah'Ien</nom>
         <affiliation>Batranoban</affiliation>
         <habitants>25000</habitants>
         <coordonnees>
             <lat>-83.5</lat>
             <lng>-125.5</lng>
         </coordonnees>
+        <infosEdL>
+            <chagar num="115">Scénario 06 - HÉRITAGES, 1ère partie</chagar>
+        </infosEdL>
     </lieu>
     <lieu>
         <nom>Telviss</nom>
@@ -829,6 +838,18 @@
             <lat>-119</lat>
             <lng>-247.125</lng>
         </coordonnees>
+        <infosEdL>
+            <chagar num="106">Scénario 05 - BRUMES D’ÉPICES, 1ère partie</chagar>
+            <chagar num="108">Scénario 05 - BRUMES D’ÉPICES, 2ème partie</chagar>
+            <chagar num="101">La Mort Carmin - Ennemi privé n°1</chagar>
+            <chagar num="82">CATASTROPHE(S) ! La Grande Foudre</chagar>
+            <chagar num="109">Scénario 05 - BRUMES D’ÉPICES, 3ème partie</chagar>
+            <chagar num="110">Scénario 05 - BRUMES D’ÉPICES, 4ème partie</chagar>
+            <chagar num="90">Scénario 00 / PROLOGUE – AUBES ROUGES, MÉCONOPS</chagar>
+            <chagar num="111">Scénario 05 - BRUMES D’ÉPICES, 5ème partie</chagar>
+            <chagar num="112">Scénario 05 - BRUMES D’ÉPICES, 6ème partie</chagar>
+            <chagar num="113">Scénario 05 - BRUMES D’ÉPICES, 7ème partie</chagar>
+        </infosEdL>
     </lieu>
     <lieu>
         <nom>Sharcot</nom>
@@ -937,7 +958,7 @@
     </lieu>
     <lieu>
         <nom>La cité des Géants</nom>
-        <affiliation>Gadhars</affiliation>
+        <affiliation>Ruine (des Pères ?)</affiliation>
         <coordonnees>
             <lat>-272.625</lat>
             <lng>13.625</lng>

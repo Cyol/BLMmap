@@ -163,6 +163,8 @@ function createMap()
     var layerEdLScenario04 = createLayerEdLScenario04();
     var layerEdLScenario05 = createLayerEdLScenario05();
     var layerEdLScenario05bis = createLayerEdLScenario05bis();
+    var layerEdLScenario06 = createLayerEdLScenario06();
+    var layerEdLScenario07 = createLayerEdLScenario07();
     var overlayMaps = {};
     overlayMaps["Villes"] = VillesLayer;
     overlayMaps[ECLATS_LUNE_LAYER_NAME] = eclatsDeLuneGroup;
@@ -171,6 +173,8 @@ function createMap()
     overlayMaps[ECLATS_LUNE_LAYER_SC03_NAME] = layerEdLScenario03;
     overlayMaps[ECLATS_LUNE_LAYER_SC04_NAME] = layerEdLScenario04;
     overlayMaps[ECLATS_LUNE_LAYER_SC05_NAME] = layerEdLScenario05;
+    overlayMaps[ECLATS_LUNE_LAYER_SC06_NAME] = layerEdLScenario06;
+    overlayMaps[ECLATS_LUNE_LAYER_SC07_NAME] = layerEdLScenario07;
 
     var baseLayer = L.tileLayer('tiles/{z}/{x}/{y}.png', {
         minZoom: mapMinZoom, maxZoom: mapMaxZoom,
@@ -311,11 +315,11 @@ function createMap()
                     //On centre sur LesPassesMaltorses
                     map.setView(new L.latLng([137,42.5]), 3, {animate:true, duration:3});
                 })
-                    .on('snakeend', function (ev) {
-                        //On centre sur LeBoisDePercechargneLoc
-                        map.setView(new L.latLng([79, -10.5]), 4, {animate:true, duration:3});
-                    })
-                    .snakeIn();
+                .on('snakeend', function (ev) {
+                    //On centre sur LeBoisDePercechargneLoc
+                    map.setView(new L.latLng([79, -10.5]), 4, {animate:true, duration:3});
+                })
+                .snakeIn();
                 break;
             case ECLATS_LUNE_LAYER_SC05_NAME :
                 layerEdLScenario05.on('snakestart', function (ev) {
@@ -325,11 +329,56 @@ function createMap()
                     map.addLayer(layerEdLScenario05bis);
                     layerEdLScenario05bis.snakeIn();
                 })
+                .on('snakeend', function (ev) {
+                    //On centre sur Durville
+                    map.setView(new L.latLng(infosVilles["Durville"].loc), 4, {animate:true, duration:3});
+                })
+                .snakeIn();
+                break;
+            case ECLATS_LUNE_LAYER_SC06_NAME :
+                layerEdLScenario06.on('snakestart', function (ev) {
+                    //On centre sur Mah'ien
+                    map.setView(new L.latLng(infosVilles["Mah'Ien"].loc), 2, {animate:true, duration:3});
+                })
+                .on('snakeend', function (ev) {
+                    //On centre sur Pôle
+                    map.setView(new L.latLng(infosVilles["Pôle"].loc), 4, {animate:true, duration:3});
+                })
+                .snakeIn();
+                break;
+            case ECLATS_LUNE_LAYER_SC07_NAME :
+                layerEdLScenario07.on('snakestart', function (ev) {
+                    //On centre sur GarderonEtMinstreDesAndelles
+                    map.setView(new L.latLng([-82,-11]), 2, {animate:true, duration:3});
+                })
                     .on('snakeend', function (ev) {
-                        //On centre sur Durville
-                        map.setView(new L.latLng(infosVilles["Durville"].loc), 4, {animate:true, duration:3});
+                        //On centre sur Pairne
+                        map.setView(new L.latLng([-204,24]), 4, {animate:true, duration:3});
                     })
                     .snakeIn();
+                break;
+            case ECLATS_LUNE_LAYER_SC08_NAME :
+                layerEdLScenario07.on('snakestart', function (ev) {
+                    //On centre sur La Cité des Falaises
+                    map.setView(new L.latLng(LaCiteDesFalaisesLoc), 2, {animate:true, duration:3});
+                })
+                    .on('snakeend', function (ev) {
+                        //On centre sur Pôle
+                        map.setView(new L.latLng([infosVilles["Pôle"].loc]), 4, {animate:true, duration:3});
+                    })
+                    .snakeIn();
+                break;
+            case "Villes" :
+                //rien de spécial
+                break;
+            default:
+                alert ("Non encore géré, mais ça va venir, promis !")
+        }
+    });
+    map.on('overlayremove', function(eo) {
+        switch (eo.name) {
+            case ECLATS_LUNE_LAYER_SC05_NAME :
+                map.removeLayer(layerEdLScenario05bis);
                 break;
             default:
         }
