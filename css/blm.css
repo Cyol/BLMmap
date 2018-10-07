@@ -28,26 +28,8 @@ h1> img{
     vertical-align: middle;
     border-radius: 8px;
 }
-.search-tip b {
-    color: #fff;
-}
-.ville.search-tip b,
-.ville.leaflet-marker-icon {
-    background: #f66
-}
-.region.search-tip b,
-.region.leaflet-marker-icon {
-    background: #66f
-}
 .search-tip {
     white-space: nowrap;
-}
-.search-tip b {
-    display: inline-block;
-    clear: left;
-    float: right;
-    padding: 0 4px;
-    margin-left: 4px;
 }
 
 .leaflet-popup-content>h2{

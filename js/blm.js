@@ -72,7 +72,7 @@ function displayDataVille($data)
         infosEdL.push(new $oChagar($(this).attr("num"), $(this).text(), $(this).attr("visibilite")));
     } );
 
-    dataVille.push({"loc" : [lat, lng], "title" : nom, "nomsAlternatifs" : nomsAlternatifs});
+    dataVille.push({"loc" : [lat, lng], "title" : nom, "nomsAlternatifs" : nomsAlternatifs, "type" : "ville"});
     infosVilles[nom] = {"loc" : [lat, lng], "affiliation" : affiliation, "habitants" : habitants, "divers" : divers, "chagars" : chagars, "infosEdL" : infosEdL};
 }
 
@@ -209,6 +209,7 @@ function createMap()
         {
             jsonret[json[i].title] = L.latLng(json[i].loc);
             jsonret[json[i].title].nomsAlternatifs = json[i].nomsAlternatifs;
+            jsonret[json[i].title].type = json[i].type;
         }
         return jsonret;
     }
@@ -226,7 +227,9 @@ function createMap()
             var dictionnaire = chaineMinusculeSansAccent(key);
             dictionnaire+=records[key].nomsAlternatifs;
             if( regSearch.test(dictionnaire) )
+			{
                 frecords[key]= records[key];
+			}
         }
 
         return frecords;
@@ -235,7 +238,7 @@ function createMap()
     //Pour customiser les suggestions de la recherche
     //@TODO à creuser pour présenter l'affiliation par couleur  => Ajouter l'info comme nomsAlternatifs pour l'exploiter
     function customTip(text,val) {
-        return '<a href="#">'+text+'</a>';
+        return '<li class="'+val.type+'"><b>'+text+'</b> <i>('+val.type+')</i></li>';
     }
 
     var markersLayer = new L.LayerGroup();
@@ -244,7 +247,10 @@ function createMap()
         sourceData: localData,
         formatData: formatData,
         buildTip: customTip,
-        textPlaceholder: 'Ville...',
+		firstTipSubmit:true,
+        textPlaceholder: 'Lieu...',
+		textErr: 'Lieu non trouvé...',
+		textCancel: 'Annuler',
         zoom: 4,
         markerLocation: true,
         initial : false,
@@ -260,11 +266,7 @@ function createMap()
         {
             map.removeLayer(markerResultat);
         }
-        var loc = e.latlng;
-        var title = e.text;
-        markerResultat = new L.Marker(new L.latLng(loc), {title: title});
-        markerResultat.bindPopup(createInfosVille(title));
-        markerResultat.addTo(map).openPopup();
+		onSearchFound(e.text, e.latlng);
     });
 
     //Ajout d'un outil pour le contrôle des layers à afficher, ceux de overlayMaps sont facultatifs avec checkbox
@@ -385,6 +387,23 @@ function createMap()
     });
 
     var popup = L.popup();
+	
+	function onSearchFound(title, infos, affichage) {
+		if(typeof affichage === "undefined")
+		{
+			affichage = true;
+		}
+		if(infos.type === "ville")
+		{
+			markerResultat = new L.Marker(new L.latLng(infos), {title: title});
+			markerResultat.bindPopup(createInfosVille(title));
+			markerResultat.addTo(map);
+			if(affichage)
+			{
+				markerResultat.openPopup();
+			}
+		}
+	}
 
     function onMapClick(e) {
         popup
@@ -396,6 +415,34 @@ function createMap()
     {
         map.on('click', onMapClick);
     }
+	if($_GET('l'))
+	{
+		var recherche = decodeURI($_GET('l'));
+		controlSearch.searchText(recherche);
+		var resultRecherche = filtreRecherche(recherche, formatData(dataVille));
+		var nbResultRecherche = $.map(resultRecherche, function(n, i) { return i; }).length;
+		//N'activer que s'il y a plus d'un résultat
+		if( nbResultRecherche >= 1 )
+		{
+			$.each(resultRecherche, function(title, infos){
+				var affichage = (nbResultRecherche === 1 && infos.type === "ville");
+				onSearchFound(title, infos, affichage);
+				//si une seule ville, on zoom dessus
+				if(affichage)
+				{
+					map.setView(new L.latLng(infos), 5, {animate:true, duration:3});
+				}
+				else
+				{
+					map.setView(new L.latLng([0,0]), 2, {animate:true, duration:3});
+				}
+			});
+		}
+		else
+		{
+			alert(recherche + " inconnu, utilisez le formulaire de recherche");
+		}
+	}
 }
 /*****************
  ** UTILITAIRES **
@@ -407,6 +454,9 @@ function createMap()
  */
 function chaineMinusculeSansAccent(chaine)
 {
+	//on vire les '
+	chaine = chaine.replace(/[\']/g, '');
+	
     var accents = {
         a:"àáâãäå",
         A:"ÀÁÂ",
