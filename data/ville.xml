@@ -1,9 +1,58 @@
 <lieuxTanaephis>
+	<lieu>
+		<nom>La Malemort</nom>
+		<type>region</type>
+		<coordonnees>
+            <lat>-39</lat>
+            <lng>-206</lng>
+			<coordonnee>
+				<lat>-32.625</lat>
+				<lng>-229.375</lng>
+			</coordonnee>
+			<coordonnee>
+				<lat>-45.625</lat>
+				<lng>-227.5</lng>
+			</coordonnee>
+			<coordonnee>
+				<lat>-52.375</lat>
+				<lng>-218.125</lng>
+			</coordonnee>
+			<coordonnee>
+				<lat>-39.75</lat>
+				<lng>-188.75</lng>
+			</coordonnee>
+			<coordonnee>
+				<lat>-39.75</lat>
+				<lng>-183</lng>
+			</coordonnee>
+			<coordonnee>
+				<lat>-32.125</lat>
+				<lng>-177.625</lng>
+			</coordonnee>
+			<coordonnee>
+				<lat>-27.25</lat>
+				<lng>-185.375</lng>
+			</coordonnee>
+			<coordonnee>
+				<lat>-30</lat>
+				<lng>-198.375</lng>
+			</coordonnee>
+			<coordonnee>
+				<lat>-26.25</lat>
+				<lng>-200.75</lng>
+			</coordonnee>
+			<coordonnee>
+				<lat>-26</lat>
+				<lng>-215.75</lng>
+			</coordonnee>
+		</coordonnees>
+	</lieu>
     <lieu>
         <nom>Pôle</nom>
         <nomsAlternatifs>
             <nom>Popol</nom>
         </nomsAlternatifs>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <habitants>4500000</habitants>
         <chagars>
@@ -26,6 +75,7 @@
     </lieu>
     <lieu>
         <nom>Sanctuaire</nom>
+		<type>ville</type>
         <affiliation>Thunk</affiliation>
         <coordonnees>
             <lat>178.5</lat>
@@ -34,6 +84,7 @@
     </lieu>
     <lieu>
         <nom>Bolivar</nom>
+		<type>ville</type>
         <affiliation>Thunk</affiliation>
         <habitants>6000</habitants>
         <coordonnees>
@@ -43,6 +94,7 @@
     </lieu>
     <lieu>
         <nom>Les Piliers</nom>
+		<type>ville</type>
         <affiliation>Nain</affiliation>
         <divers>Abandonné</divers>
         <coordonnees>
@@ -52,6 +104,7 @@
     </lieu>
     <lieu>
         <nom>Fort Barn</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <divers>Ruine</divers>
         <coordonnees>
@@ -61,6 +114,7 @@
     </lieu>
     <lieu>
         <nom>Krater</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>7000</habitants>
         <coordonnees>
@@ -70,6 +124,7 @@
     </lieu>
     <lieu>
         <nom>Tourbe</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>15000</habitants>
         <coordonnees>
@@ -79,6 +134,7 @@
     </lieu>
     <lieu>
         <nom>Rockford</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>40000</habitants>
         <chagars>
@@ -91,6 +147,7 @@
     </lieu>
     <lieu>
         <nom>Howlfarr</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>5000</habitants>
         <coordonnees>
@@ -100,6 +157,7 @@
     </lieu>
     <lieu>
         <nom>Varnir</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>9000</habitants>
         <coordonnees>
@@ -109,6 +167,7 @@
     </lieu>
     <lieu>
         <nom>Byrd</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>22000</habitants>
         <coordonnees>
@@ -121,6 +180,7 @@
     </lieu>
     <lieu>
         <nom>Markony</nom>
+		<type>ville</type>
         <affiliation>Thunk</affiliation>
         <habitants>4000</habitants>
         <divers>Comptoir commercial</divers>
@@ -138,6 +198,7 @@
     </lieu>
     <lieu>
         <nom>Castelgorn</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <divers>Bagne</divers>
         <coordonnees>
@@ -147,6 +208,7 @@
     </lieu>
     <lieu>
         <nom>Hautegarde</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>7500</habitants>
         <coordonnees>
@@ -156,6 +218,7 @@
     </lieu>
     <lieu>
         <nom>Ronne</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>9000</habitants>
         <coordonnees>
@@ -165,6 +228,7 @@
     </lieu>
     <lieu>
         <nom>Berkner</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>39000</habitants>
         <coordonnees>
@@ -179,6 +243,7 @@
     </lieu>
     <lieu>
         <nom>Citadelle des Glaces</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <divers>Ancien nom : Citadelle des flots cendrés</divers>
         <chagars>
@@ -197,6 +262,7 @@
     </lieu>
     <lieu>
         <nom>Fort des obstinés</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <chagars>
             <chagar num="65" visibilite="tous">La chaîne des fort 2/2</chagar>
@@ -208,6 +274,7 @@
     </lieu>
     <lieu>
         <nom>Fort de la crevasse</nom>
+		<type>ville</type>
         <affiliation>??</affiliation>
         <chagars>
             <chagar num="65" visibilite="tous">La chaîne des fort 2/2</chagar>
@@ -219,6 +286,7 @@
     </lieu>
     <lieu>
         <nom>Fort de l'antre</nom>
+		<type>ville</type>
         <affiliation>Loi du Sang</affiliation>
         <chagars>
             <chagar num="65" visibilite="tous">La chaîne des fort 2/2</chagar>
@@ -230,6 +298,7 @@
     </lieu>
     <lieu>
         <nom>Grimgaard</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <divers>Ancien nom : Citadelle du pégase souverain</divers>
         <chagars>
@@ -242,6 +311,7 @@
     </lieu>
     <lieu>
         <nom>Nadhas</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <coordonnees>
             <lat>44</lat>
@@ -250,6 +320,7 @@
     </lieu>
     <lieu>
         <nom>Citadelle du Loup Gris</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <chagars>
             <chagar num="64" visibilite="tous">La chaîne des fort 1/2</chagar>
@@ -261,6 +332,7 @@
     </lieu>
     <lieu>
         <nom>Fort de l'Aigle</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <divers>Bänd de la Jarl Ylva, mine d'or</divers>
         <chagars>
@@ -273,6 +345,7 @@
     </lieu>
     <lieu>
         <nom>Fort sinistre</nom>
+		<type>ville</type>
         <affiliation>Loups</affiliation>
         <divers>Poche de magie glauque</divers>
         <chagars>
@@ -285,6 +358,7 @@
     </lieu>
     <lieu>
         <nom>Durens</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>6000</habitants>
         <coordonnees>
@@ -294,6 +368,7 @@
     </lieu>
     <lieu>
         <nom>Dheurn</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>7000</habitants>
         <coordonnees>
@@ -303,6 +378,7 @@
     </lieu>
     <lieu>
         <nom>Palav</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>11000</habitants>
         <coordonnees>
@@ -312,6 +388,7 @@
     </lieu>
     <lieu>
         <nom>Sept Forges</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>11000</habitants>
         <coordonnees>
@@ -321,6 +398,7 @@
     </lieu>
     <lieu>
         <nom>Bengard</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>12000</habitants>
         <coordonnees>
@@ -330,6 +408,7 @@
     </lieu>
     <lieu>
         <nom>Macmurdo</nom>
+		<type>ville</type>
         <affiliation>Alweg</affiliation>
         <coordonnees>
             <lat>34.5</lat>
@@ -338,6 +417,7 @@
     </lieu>
     <lieu>
         <nom>Joyel</nom>
+		<type>ville</type>
         <affiliation>Piorad</affiliation>
         <habitants>6000</habitants>
         <coordonnees>
@@ -347,6 +427,7 @@
     </lieu>
     <lieu>
         <nom>Halet</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>8000</habitants>
         <coordonnees>
@@ -356,6 +437,7 @@
     </lieu>
     <lieu>
         <nom>Ajern</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>9000</habitants>
         <coordonnees>
@@ -365,6 +447,7 @@
     </lieu>
     <lieu>
         <nom>Kijaÿ</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <chagars>
             <chagar num="17" visibilite="tous">La porte du sel</chagar>
@@ -376,6 +459,7 @@
     </lieu>
     <lieu>
         <nom>Bigett</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <habitants>22000</habitants>
         <coordonnees>
@@ -385,6 +469,7 @@
     </lieu>
     <lieu>
         <nom>Colpocèle</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <habitants>9000</habitants>
         <chagars>
@@ -397,6 +482,7 @@
     </lieu>
     <lieu>
         <nom>La Perrière</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <habitants>12000</habitants>
         <coordonnees>
@@ -406,6 +492,7 @@
     </lieu>
     <lieu>
         <nom>Belgrano</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>80000</habitants>
         <coordonnees>
@@ -419,6 +506,7 @@
     </lieu>
     <lieu>
         <nom>Nasvea</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>52000</habitants>
         <coordonnees>
@@ -428,6 +516,7 @@
     </lieu>
     <lieu>
         <nom>Vasnagorn</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>70000</habitants>
         <coordonnees>
@@ -437,6 +526,7 @@
     </lieu>
     <lieu>
         <nom>Nerolazarevskaya</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>240000</habitants>
         <chagars>
@@ -449,6 +539,7 @@
     </lieu>
     <lieu>
         <nom>Boissie</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <coordonnees>
             <lat>-68.5</lat>
@@ -457,6 +548,7 @@
     </lieu>
     <lieu>
         <nom>Meule-fariale</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>2000</habitants>
         <chagars>
@@ -469,6 +561,7 @@
     </lieu>
     <lieu>
         <nom>Nazesca</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <coordonnees>
             <lat>-55.5</lat>
@@ -477,6 +570,7 @@
     </lieu>
     <lieu>
         <nom>Glassud</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>112000</habitants>
         <coordonnees>
@@ -486,6 +580,7 @@
     </lieu>
     <lieu>
         <nom>Pointe</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>45000</habitants>
         <coordonnees>
@@ -495,6 +590,7 @@
     </lieu>
     <lieu>
         <nom>Croisée</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <habitants>18000</habitants>
         <coordonnees>
@@ -504,6 +600,7 @@
     </lieu>
     <lieu>
         <nom>Sarneville</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <habitants>16000</habitants>
         <coordonnees>
@@ -513,6 +610,7 @@
     </lieu>
     <lieu>
         <nom>Jetée</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <habitants>10000</habitants>
         <chagars>
@@ -525,6 +623,7 @@
     </lieu>
     <lieu>
         <nom>Vargalupino</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <coordonnees>
             <lat>-67.5</lat>
@@ -533,6 +632,7 @@
     </lieu>
     <lieu>
         <nom>Port Astrid</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <habitants>6000</habitants>
         <coordonnees>
@@ -542,6 +642,7 @@
     </lieu>
     <lieu>
         <nom>Vhern</nom>
+		<type>ville</type>
         <affiliation>Dérigion</affiliation>
         <habitants>8000</habitants>
         <coordonnees>
@@ -551,6 +652,7 @@
     </lieu>
     <lieu>
         <nom>Zathos</nom>
+		<type>ville</type>
         <affiliation>Sekekers et brigands</affiliation>
         <divers>Ruine</divers>
         <coordonnees>
@@ -560,6 +662,7 @@
     </lieu>
     <lieu>
         <nom>Ourouel</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>8000</habitants>
         <coordonnees>
@@ -569,6 +672,7 @@
     </lieu>
     <lieu>
         <nom>Ananji</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>16000</habitants>
         <coordonnees>
@@ -578,6 +682,7 @@
     </lieu>
     <lieu>
         <nom>Daoaj</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>19000</habitants>
         <coordonnees>
@@ -587,6 +692,7 @@
     </lieu>
     <lieu>
         <nom>Epir</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>22000</habitants>
         <coordonnees>
@@ -596,6 +702,7 @@
     </lieu>
     <lieu>
         <nom>Andélé</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>30000</habitants>
         <coordonnees>
@@ -605,6 +712,7 @@
     </lieu>
     <lieu>
         <nom>Oasis d'Aghen</nom>
+		<type>ville</type>
         <divers><![CDATA[<a href="http://www.cerbere.org/dain/share/blm/oasis-aghen-small.jpg" target="_blank">Visuel de l'Oasis d'Aghen (par Balt)</a>]]></divers>
         <affiliation>Batranoban</affiliation>
         <habitants>9000</habitants>
@@ -615,6 +723,7 @@
     </lieu>
     <lieu>
         <nom>Mah'Ien</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>25000</habitants>
         <coordonnees>
@@ -627,6 +736,7 @@
     </lieu>
     <lieu>
         <nom>Telviss</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>7000</habitants>
         <coordonnees>
@@ -636,6 +746,7 @@
     </lieu>
     <lieu>
         <nom>Mécendre</nom>
+		<type>ville</type>
         <affiliation>Alweg</affiliation>
         <coordonnees>
             <lat>-90.875</lat>
@@ -644,6 +755,7 @@
     </lieu>
     <lieu>
         <nom>Serne</nom>
+		<type>ville</type>
         <affiliation>Alweg</affiliation>
         <habitants>15000</habitants>
         <coordonnees>
@@ -653,6 +765,7 @@
     </lieu>
     <lieu>
         <nom>Pelant</nom>
+		<type>ville</type>
         <affiliation>Alweg</affiliation>
         <habitants>12000</habitants>
         <coordonnees>
@@ -662,6 +775,7 @@
     </lieu>
     <lieu>
         <nom>Epille</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>14000</habitants>
         <coordonnees>
@@ -671,6 +785,7 @@
     </lieu>
     <lieu>
         <nom>Falaise</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>26000</habitants>
         <coordonnees>
@@ -680,6 +795,7 @@
     </lieu>
     <lieu>
         <nom>Fosse d'Arnène</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <coordonnees>
             <lat>-113.375</lat>
@@ -688,6 +804,7 @@
     </lieu>
     <lieu>
         <nom>Basran</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>16000</habitants>
         <coordonnees>
@@ -697,6 +814,7 @@
     </lieu>
     <lieu>
         <nom>Sledvaya</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>19000</habitants>
         <coordonnees>
@@ -706,6 +824,7 @@
     </lieu>
     <lieu>
         <nom>Uzel</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <coordonnees>
             <lat>-108.375</lat>
@@ -714,6 +833,7 @@
     </lieu>
     <lieu>
         <nom>Kimé</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>20000</habitants>
         <coordonnees>
@@ -723,6 +843,7 @@
     </lieu>
     <lieu>
         <nom>Tavezddan</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>24000</habitants>
         <coordonnees>
@@ -732,6 +853,7 @@
     </lieu>
     <lieu>
         <nom>Gradden</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>17000</habitants>
         <coordonnees>
@@ -741,6 +863,7 @@
     </lieu>
     <lieu>
         <nom>Le Gassot</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>50000</habitants>
         <coordonnees>
@@ -750,6 +873,7 @@
     </lieu>
     <lieu>
         <nom>Convert</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>15000</habitants>
         <coordonnees>
@@ -759,6 +883,7 @@
     </lieu>
     <lieu>
         <nom>Inaccessible</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>85000</habitants>
         <coordonnees>
@@ -768,6 +893,7 @@
     </lieu>
     <lieu>
         <nom>Les Marialles</nom>
+		<type>ville</type>
         <affiliation>Alweg</affiliation>
         <habitants>7500</habitants>
         <coordonnees>
@@ -777,6 +903,7 @@
     </lieu>
     <lieu>
         <nom>Grand-Pont</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>7000</habitants>
         <coordonnees>
@@ -786,6 +913,7 @@
     </lieu>
     <lieu>
         <nom>Halinevanesnaya</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>13000</habitants>
         <coordonnees>
@@ -795,6 +923,7 @@
     </lieu>
     <lieu>
         <nom>Poyol</nom>
+		<type>ville</type>
         <affiliation>Alweg</affiliation>
         <habitants>6000</habitants>
         <coordonnees>
@@ -804,6 +933,7 @@
     </lieu>
     <lieu>
         <nom>Vastok</nom>
+		<type>ville</type>
         <affiliation>Alweg</affiliation>
         <habitants>30000</habitants>
         <chagars>
@@ -816,6 +946,7 @@
     </lieu>
     <lieu>
         <nom>Miran</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <coordonnees>
             <lat>-138.875</lat>
@@ -824,6 +955,7 @@
     </lieu>
     <lieu>
         <nom>Ni'ath</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <coordonnees>
             <lat>-167</lat>
@@ -832,6 +964,7 @@
     </lieu>
     <lieu>
         <nom>Durville</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>110000</habitants>
         <coordonnees>
@@ -853,6 +986,7 @@
     </lieu>
     <lieu>
         <nom>Sharcot</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>45000</habitants>
         <coordonnees>
@@ -862,6 +996,7 @@
     </lieu>
     <lieu>
         <nom>Carnelle</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>15000</habitants>
         <coordonnees>
@@ -871,6 +1006,7 @@
     </lieu>
     <lieu>
         <nom>Casane</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>12000</habitants>
         <coordonnees>
@@ -880,6 +1016,7 @@
     </lieu>
     <lieu>
         <nom>Tehen</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>65000</habitants>
         <coordonnees>
@@ -889,6 +1026,7 @@
     </lieu>
     <lieu>
         <nom>Mathana</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>14000</habitants>
         <coordonnees>
@@ -898,6 +1036,7 @@
     </lieu>
     <lieu>
         <nom>Berceau</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <coordonnees>
             <lat>-196.75</lat>
@@ -906,6 +1045,7 @@
     </lieu>
     <lieu>
         <nom>Najh</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>14000</habitants>
         <coordonnees>
@@ -915,6 +1055,7 @@
     </lieu>
     <lieu>
         <nom>Hadjan</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <coordonnees>
             <lat>-220.5</lat>
@@ -923,6 +1064,7 @@
     </lieu>
     <lieu>
         <nom>Komsomolovskaya</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>35000</habitants>
         <coordonnees>
@@ -932,6 +1074,7 @@
     </lieu>
     <lieu>
         <nom>Fort Del</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <coordonnees>
             <lat>-208.75</lat>
@@ -940,6 +1083,7 @@
     </lieu>
     <lieu>
         <nom>Molodesnaya</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>21000</habitants>
         <coordonnees>
@@ -949,6 +1093,7 @@
     </lieu>
     <lieu>
         <nom>Conrad</nom>
+		<type>ville</type>
         <affiliation>Vorozion</affiliation>
         <habitants>9000</habitants>
         <coordonnees>
@@ -958,6 +1103,7 @@
     </lieu>
     <lieu>
         <nom>La cité des Géants</nom>
+		<type>ville</type>
         <affiliation>Ruine (des Pères ?)</affiliation>
         <coordonnees>
             <lat>-272.625</lat>
@@ -966,6 +1112,7 @@
     </lieu>
     <lieu>
         <nom>Port aux Cousins</nom>
+		<type>ville</type>
         <affiliation>Gadhars</affiliation>
         <coordonnees>
             <lat>-251</lat>
@@ -974,6 +1121,7 @@
     </lieu>
     <lieu>
         <nom>Mangas</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>10000</habitants>
         <coordonnees>
@@ -983,6 +1131,7 @@
     </lieu>
     <lieu>
         <nom>Mirny</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>13000</habitants>
         <coordonnees>
@@ -992,6 +1141,7 @@
     </lieu>
     <lieu>
         <nom>Lhenin</nom>
+		<type>ville</type>
         <affiliation>Batranoban</affiliation>
         <habitants>18000</habitants>
         <coordonnees>

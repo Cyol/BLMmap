@@ -5,8 +5,10 @@
  *********************************************************************/
 var cheminSource    = "data/ville.xml";
 
-var dataVille = [];
+var dataVilles = [];
 var infosVilles = [];
+var dataRegions = [];
+var infosRegions = [];
 var map;
 var markerResultat;
 
@@ -45,35 +47,96 @@ function $oChagar(num, titre, visibilite){
     this.oC_getLink = oC_getLink;
 }
 
-function displayDataVille($data)
+function lienWiki(nom, type)
 {
-    var nom = $data.children("nom").text();
-    var $coordonnees = $data.children("coordonnees");
-    var lat, lng, affiliation, habitants, divers, chagars, infosEdL;
-    lat = $coordonnees.find("lat").text();
-    lng = $coordonnees.find("lng").text();
-    var $nomsAlternatifs = $data.children("nomsAlternatifs");
-    var nomsAlternatifs = "";
-    $nomsAlternatifs.find("nom").each( function(){
-        nomsAlternatifs+=$(this).text();
-    });
-    affiliation = $data.children("affiliation").text();
-    habitants = $data.children("habitants").text();
-    divers = $data.children("divers").text();
-    var $chagars = $data.children("chagars");
-    chagars = [];
-    $chagars.find("chagar").each( function(){
-        chagars.push(new $oChagar($(this).attr("num"), $(this).text(), $(this).attr("visibilite")));
-    } );
-    //Liste des Chagars Eclats de Lune
-    var $infosEdL = $data.children("infosEdL");
-    infosEdL = [];
-    $infosEdL.find("chagar").each( function(){
-        infosEdL.push(new $oChagar($(this).attr("num"), $(this).text(), $(this).attr("visibilite")));
-    } );
+	return '<b><a href="http://bloodlustmetal.cyol.fr/geographie:'+type+':'+chaineMinusculeSansAccent(nom, true)+'" target="_blank">Wiki Bloodlust</a></b>'
+}
 
-    dataVille.push({"loc" : [lat, lng], "title" : nom, "nomsAlternatifs" : nomsAlternatifs, "type" : "ville"});
-    infosVilles[nom] = {"loc" : [lat, lng], "affiliation" : affiliation, "habitants" : habitants, "divers" : divers, "chagars" : chagars, "infosEdL" : infosEdL};
+function displaydataVilles($data)
+{
+	var nom = $data.children("nom").text();
+	var type = $data.children("type").text();
+	var $coordonnees = $data.children("coordonnees");
+	var lat, lng, affiliation, habitants, divers, chagars, infosEdL;
+	lat = $coordonnees.children("lat").text();
+	lng = $coordonnees.children("lng").text();
+	var $nomsAlternatifs = $data.children("nomsAlternatifs");
+	var nomsAlternatifs = "";
+	$nomsAlternatifs.find("nom").each( function(){
+		nomsAlternatifs+=$(this).text();
+	});
+	affiliation = $data.children("affiliation").text();
+	habitants = $data.children("habitants").text();
+	divers = $data.children("divers").text();
+	var $chagars = $data.children("chagars");
+	chagars = [];
+	$chagars.find("chagar").each( function(){
+		chagars.push(new $oChagar($(this).attr("num"), $(this).text(), $(this).attr("visibilite")));
+	} );
+	//Liste des Chagars Eclats de Lune
+	var $infosEdL = $data.children("infosEdL");
+	infosEdL = [];
+	$infosEdL.find("chagar").each( function(){
+		infosEdL.push(new $oChagar($(this).attr("num"), $(this).text(), $(this).attr("visibilite")));
+	} );
+
+	dataVilles.push({"loc" : [lat, lng], "title" : nom, "nomsAlternatifs" : nomsAlternatifs, "type" : type});
+	infosVilles[nom] = {"loc" : [lat, lng], "affiliation" : affiliation, "habitants" : habitants, "divers" : divers, "chagars" : chagars, "infosEdL" : infosEdL, "type" : type};
+}
+
+function displaydataRegions($data)
+{
+	var nom = $data.children("nom").text();
+	var type = $data.children("type").text();
+	var $coordonnees = $data.children("coordonnees");
+	var lat, lng, coordLat, coordLng;
+	lat = $coordonnees.children("lat").text();
+	lng = $coordonnees.children("lng").text();
+	coordonnees = [];
+	$coordonnees.find("coordonnee").each( function(){
+		coordLat = $(this).children("lat").text();
+		coordLng = $(this).children("lng").text();
+		coordonnees.push([coordLat, coordLng]);
+	} );
+	var $nomsAlternatifs = $data.children("nomsAlternatifs");
+	var nomsAlternatifs = "";
+	$nomsAlternatifs.find("nom").each( function(){
+		nomsAlternatifs+=$(this).text();
+	});
+	var divers, chagars;
+	divers = $data.children("divers").text();
+	var $chagars = $data.children("chagars");
+	chagars = [];
+	$chagars.find("chagar").each( function(){
+		chagars.push(new $oChagar($(this).attr("num"), $(this).text(), $(this).attr("visibilite")));
+	} );
+	dataRegions.push({"loc": [lat,lng], "coordonnees": coordonnees, "title": nom, "nomsAlternatifs" : nomsAlternatifs, "type" : type});
+	infosRegions[nom] = {"loc": [lat,lng], "divers" : divers, "chagars" : chagars, "type" : type};
+}
+
+function createInfosRegion(nomRegion)
+{
+    var divers = infosRegions[nomRegion].divers;
+    var chagars = infosRegions[nomRegion].chagars;
+    var infos = '<h2>' + nomRegion + '</h2>';
+    if(divers !== "")
+    {
+        infos += '<li><b>Divers : </b>'+divers+'</li>';
+    }
+    if(chagars.length)
+    {
+        for(var i=0; i<chagars.length; i++)
+        {
+            infos += '<li><b>Chagar ' + chagars[i].oC_getNum() + ' : </b>'+chagars[i].oC_getLink();
+            if(chagars[i].oC_getVisibilite() === "mj")
+            {
+                infos += ' <span class="reserve">(Réservé MJ)</span>';
+            }
+            infos += '</li>';
+        }
+    }
+	infos += lienWiki(nomRegion, 'regions');
+    return infos;
 }
 
 function createInfosVille(nomVille, edl)
@@ -124,6 +187,7 @@ function createInfosVille(nomVille, edl)
 
     }
     infos += '</ul>';
+	infos += lienWiki(nomVille, 'villes');
 
     return infos;
 }
@@ -145,15 +209,26 @@ function createMap()
     });
 
     var VillesGroupe = [];
-    for (var i in dataVille) {
-        var title = dataVille[i].title,	//value searched
-            loc = dataVille[i].loc,		//position found
+    for (var i in dataVilles) {
+        var title = dataVilles[i].title,	//value searched
+            loc = dataVilles[i].loc,		//position found
             marker = new L.Marker(new L.latLng(loc), {title: title});//se property searched
             marker.bindPopup(createInfosVille(title));
         VillesGroupe.push(marker);
     }
 
     var VillesLayer = L.layerGroup(VillesGroupe);
+	
+    var RegionsGroupe = [];
+    for (var i in dataRegions) {
+        var title = dataRegions[i].title,	//value searched
+			polygon = new L.polygon(dataRegions[i].coordonnees);
+		polygon.bindPopup(createInfosRegion(title));
+        RegionsGroupe.push(polygon);
+    }
+
+    var RegionsLayer = L.layerGroup(RegionsGroupe);
+	
     //création des informations pour Eclats de Lune
     createLayerEclatsLune();
     var eclatsDeLuneGroup = L.layerGroup([]);
@@ -167,6 +242,7 @@ function createMap()
     var layerEdLScenario07 = createLayerEdLScenario07();
     var overlayMaps = {};
     overlayMaps["Villes"] = VillesLayer;
+    overlayMaps["Regions"] = RegionsLayer;
     overlayMaps[ECLATS_LUNE_LAYER_NAME] = eclatsDeLuneGroup;
     overlayMaps[ECLATS_LUNE_LAYER_SC01_NAME] = layerEdLScenario01;
     overlayMaps[ECLATS_LUNE_LAYER_SC02_NAME] = layerEdLScenario02;
@@ -196,7 +272,8 @@ function createMap()
     function localData(text, callResponse)
     {
         //here can use custom criteria or merge data from multiple layers
-        callResponse(dataVille);
+		datas = dataVilles.concat(dataRegions);
+        callResponse(datas);
         return {	//called to stop previous requests on map move
             abort: function() {
             }
@@ -371,6 +448,7 @@ function createMap()
                     .snakeIn();
                 break;
             case "Villes" :
+            case "Regions" :
                 //rien de spécial
                 break;
             default:
@@ -393,15 +471,23 @@ function createMap()
 		{
 			affichage = true;
 		}
-		if(infos.type === "ville")
+		switch(infos.type)
 		{
-			markerResultat = new L.Marker(new L.latLng(infos), {title: title});
-			markerResultat.bindPopup(createInfosVille(title));
-			markerResultat.addTo(map);
-			if(affichage)
-			{
-				markerResultat.openPopup();
-			}
+			case "ville":
+				markerResultat = new L.Marker(new L.latLng(infos), {title: title});
+				markerResultat.bindPopup(createInfosVille(title));
+				break;
+			case "region":
+				markerResultat = new L.polygon(dataRegions[i].coordonnees, {title: title});
+				markerResultat.bindPopup(createInfosRegion(title));
+				break;
+			default:
+				return;
+		}
+		markerResultat.addTo(map);
+		if(affichage)
+		{
+			markerResultat.openPopup();
 		}
 	}
 
@@ -419,13 +505,14 @@ function createMap()
 	{
 		var recherche = decodeURI($_GET('l'));
 		controlSearch.searchText(recherche);
-		var resultRecherche = filtreRecherche(recherche, formatData(dataVille));
+		var datas = dataVilles.concat(dataRegions);
+		var resultRecherche = filtreRecherche(recherche, formatData(datas));
 		var nbResultRecherche = $.map(resultRecherche, function(n, i) { return i; }).length;
 		//N'activer que s'il y a plus d'un résultat
 		if( nbResultRecherche >= 1 )
 		{
 			$.each(resultRecherche, function(title, infos){
-				var affichage = (nbResultRecherche === 1 && infos.type === "ville");
+				var affichage = (nbResultRecherche === 1);
 				onSearchFound(title, infos, affichage);
 				//si une seule ville, on zoom dessus
 				if(affichage)
@@ -452,10 +539,17 @@ function createMap()
  * @param chaine
  * @returns {XML|string|void}
  */
-function chaineMinusculeSansAccent(chaine)
+function chaineMinusculeSansAccent(chaine, apostropheUnderscore)
 {
+	chaine = chaine.toLowerCase();
+
 	//on vire les '
-	chaine = chaine.replace(/[\']/g, '');
+	var remplaceApostrophe = '';
+	if(apostropheUnderscore)
+	{
+		remplaceApostrophe = '_';
+	}
+	chaine = chaine.replace(/[\' ]/g, remplaceApostrophe);
 	
     var accents = {
         a:"àáâãäå",
@@ -509,14 +603,8 @@ function $_GET(param) {
 }
 
 /**
- * @TODO Renvoie les coordonnées d'un event de snake
- * @param ev
+ * Action au chargement
  */
-function getSnakeEvCoord(ev)
-{
-    console.log(ev.target._map._animateToCenter);
-}
-
 $(document).ready(function ()
 {
     $.ajax( {
@@ -528,7 +616,16 @@ $(document).ready(function ()
                 $xml.find("lieu").each(
                     function()
                     {
-                        displayDataVille($(this));
+						var type = $(this).children("type").text();
+						switch(type)
+						{
+							case "ville" :
+								displaydataVilles($(this));
+								break;
+							case "region":
+								displaydataRegions($(this));
+								break;
+						}
                     }
                 );
 
