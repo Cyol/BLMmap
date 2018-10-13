@@ -252,20 +252,31 @@ function createMap()
     overlayMaps[ECLATS_LUNE_LAYER_SC06_NAME] = layerEdLScenario06;
     overlayMaps[ECLATS_LUNE_LAYER_SC07_NAME] = layerEdLScenario07;
 
-    var baseLayer = L.tileLayer('tiles/{z}/{x}/{y}.png', {
+    var layerBalt = L.tileLayer('tiles/{z}/{x}/{y}.png', {
         minZoom: mapMinZoom, maxZoom: mapMaxZoom,
         attribution: 'Création <a href="http://cyol.fr/blog">Cyol</a>, carte par &copy; <a href="https://www.orbe.be/aides-de-jeux/bloodlust/81-tanaephis-s-offre-a-vous">Balt</a>',
         noWrap: true,
         tms: false
     });
+    var layerBadButta = L.tileLayer('tiles_blm/{z}/{x}/{y}.png', {
+        minZoom: mapMinZoom, maxZoom: mapMaxZoom,
+        attribution: 'Création <a href="http://cyol.fr/blog">Cyol</a>, carte par &copy; <a href="https://www.deviantart.com/kervala/art/Tanaephis-map-473279581">John Doe (montage Kervala)</a>',
+        noWrap: true,
+        tms: false
+    });
 
+	var baseMaps = {};
+	baseMaps["Version officielle Badbuta"] = layerBadButta;
+	baseMaps["Version retravaillée par Balt"] = layerBalt;
+	
+	
     map = L.map('map', {
         maxZoom: mapMaxZoom,
         minZoom: mapMinZoom,
         crs: customCRS,
         zoom: mapMaxZoom,
         center: new L.latLng(infosVilles["Pôle"].loc),
-        layers : [baseLayer],
+        layers : [layerBadButta, layerBalt],
         zoomControl:false
     });
 
@@ -348,7 +359,7 @@ function createMap()
 
     //Ajout d'un outil pour le contrôle des layers à afficher, ceux de overlayMaps sont facultatifs avec checkbox
     //le null correspond aux layer obligatoire, par exemple si on utilise plusieurs fond pour les cartes (couleur, noir&blanc, ...)
-    L.control.layers(null, overlayMaps, {position:'topleft'}).addTo(map);
+    L.control.layers(baseMaps, overlayMaps, {position:'topleft'}).addTo(map);
 
     //On cache les liens Eclats de Lune dans le contrôle des layers
     $(".leaflet-control-layers-overlays>label:has(span.EdLGroupe)").addClass("layerEdLGroupe");
