@@ -505,7 +505,7 @@ function createMap()
     function onMapClick(e) {
         popup
             .setLatLng(e.latlng)
-            .setContent("You clicked the map at " + e.latlng.toString())
+            .setContent("Vous avez cliqué sur la carte aux coordonnées : " + e.latlng.toString())
             .openOn(map);
     }
     if($_GET('c'))
